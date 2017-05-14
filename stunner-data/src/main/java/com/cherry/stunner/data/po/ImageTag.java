@@ -7,3 +7,4 @@ public class ImageTag {
     private Long tagId;
 
 }
+
