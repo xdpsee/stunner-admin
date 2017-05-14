@@ -4,7 +4,83 @@
 <mapper namespace="com.cherry.stunner.data.service.impl.mapper.ImageMapper">
 
     <resultMap id="imageResultMap" type="Image">
+        <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
 
+        <result property="albumId" javaType="Long" column="album_id" jdbcType="BIGINT"/>
+        <result property="originTitle" javaType="String" column="origin_title" jdbcType="VARCHAR"/>
+        <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
+        <result property="originUrl" javaType="String" column="origin_url" jdbcType="VARCHAR"/>
+        <result property="url" javaType="String" column="url" jdbcType="VARCHAR"/>
+        <result property="width" javaType="Integer" column="width" jdbcType="INTEGER"/>
+        <result property="height" javaType="Integer" column="height" jdbcType="INTEGER"/>
+        <result property="order" javaType="Integer" column="order" jdbcType="INTEGER"/>
+        <result property="status" javaType="ImageStatus" column="status" jdbcType="INTEGER"
+                typeHandler=""/>
     </resultMap>
+
+    <select id="selectByAlbumId" resultMap="imageResultMap">
+        SELECT * FROM images
+        WHERE album_id = #{albumId}
+        AND status = 2
+        ORDER BY `order` ASC
+</select>
+
+    <select id="selectUnreadyByAlbumId" resultMap="imageResultMap">
+        SELECT * FROM images
+        WHERE album_id = #{albumId}
+        AND status != 2
+        ORDER BY `order` ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT IGNORE INTO images (
+          gmt_create,
+          gmt_modified,
+          album_id,
+          origin_title,
+          title,
+          origin_url,
+          url,
+          `order`,
+          status
+        ) VALUES (
+          #{gmtCreate},
+          #{gmtModified},
+          #{albumId},
+          #{originTitle},
+          #{title},
+          #{originUrl},
+          #{url},
+          #{order},
+          #{status}
+        )
+    </insert>
+
+    <update id="updateImage">
+        UPDATE images SET gmt_modified = now()
+        <if test="title!=null">
+            , title = #{title}
+        </if>
+        <if test="url!=null">
+            , url = #{url}
+        </if>
+        <if test="width!=null">
+            , width = #{width}
+        </if>
+        <if test="height!=null">
+            , height = #{height}
+        </if>
+        WHERE id = #{imageId}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE images
+        SET status = #{status}, gmt_modified = now()
+        WHERE id = #{imageId}
+    </update>
+
+
 
 </mapper>

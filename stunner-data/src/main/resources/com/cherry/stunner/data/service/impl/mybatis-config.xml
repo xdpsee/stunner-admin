@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-/mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25"/>
+        <setting name="safeRowBoundsEnabled" value="false"/>
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
+        <setting name="localCacheScope" value="SESSION"/>
+        <setting name="jdbcTypeForNull" value="OTHER"/>
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="Category" type="com.cherry.stunner.data.po.Category"/>
+        <typeAlias alias="Album" type="com.cherry.stunner.data.po.Album"/>
+        <typeAlias alias="Image" type="com.cherry.stunner.data.po.Image"/>
+        <typeAlias alias="Tag" type="com.cherry.stunner.data.po.Tag"/>
+        <typeAlias alias="ImageTag" type="com.cherry.stunner.data.po.ImageTag"/>
+        <typeAlias alias="CategoryAlbum" type="com.cherry.stunner.data.po.CategoryAlbum"/>
+    </typeAliases>
+
+    <typeHandlers>
+        <typeHandler handler="com.cherry.stunner.data.service.impl.type.ImageStatusTypeHandler"/>
+        <typeHandler handler="com.cherry.stunner.data.service.impl.type.AlbumStatusTypeHandler"/>
+        <typeHandler handler="com.cherry.stunner.data.service.impl.type.CategoryStatusTypeHandler"/>
+
+    </typeHandlers>
+
+</configuration>
