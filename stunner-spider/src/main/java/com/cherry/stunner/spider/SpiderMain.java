@@ -6,7 +6,7 @@ public class SpiderMain {
 
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("src/main/resources/application-context.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 
     }
 

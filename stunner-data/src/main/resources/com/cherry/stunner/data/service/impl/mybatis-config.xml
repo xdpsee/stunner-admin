@@ -19,6 +19,10 @@
     </settings>
 
     <typeAliases>
+        <typeAlias alias="ImageStatus" type="com.cherry.stunner.data.enums.ImageStatus"/>
+        <typeAlias alias="AlbumStatus" type="com.cherry.stunner.data.enums.AlbumStatus"/>
+        <typeAlias alias="CategoryStatus" type="com.cherry.stunner.data.enums.CategoryStatus"/>
+
         <typeAlias alias="Category" type="com.cherry.stunner.data.po.Category"/>
         <typeAlias alias="Album" type="com.cherry.stunner.data.po.Album"/>
         <typeAlias alias="Image" type="com.cherry.stunner.data.po.Image"/>
