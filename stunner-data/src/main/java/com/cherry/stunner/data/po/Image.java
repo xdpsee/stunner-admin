@@ -4,7 +4,7 @@ import com.cherry.stunner.data.enums.ImageStatus;
 import lombok.Data;
 
 @Data
-public class Image extends Base {
+public class Image extends Entity {
 
     private Long albumId;
 

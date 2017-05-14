@@ -3,7 +3,7 @@ package com.cherry.stunner.data.po;
 import java.util.Date;
 
 
-public class Base {
+public class Entity {
 
     private Long id;
 

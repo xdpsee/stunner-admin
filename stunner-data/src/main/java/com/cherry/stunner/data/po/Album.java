@@ -4,7 +4,7 @@ import com.cherry.stunner.data.enums.AlbumStatus;
 import lombok.Data;
 
 @Data
-public class Album extends Base {
+public class Album extends Entity {
 
     private String originTitle;
 
