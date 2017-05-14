@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cherry.stunner.data.service.impl.mapper.TagMapper">
+
+    <resultMap id="tagResultMap" type="Tag">
+        <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="tagResultMap">
+        SELECT * FROM tags WHERE id = #{tagId}
+    </select>
+
+    <select id="selectByImageId" resultMap="tagResultMap">
+        SELECT * FROM tags
+        WHERE id in (
+            SELECT tag_id FROM image_tags WHERE image_id = #{imageId}
+        )
+    </select>
+
+    <insert id="insert" parameterType="Tag" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT IGNORE INTO tags (
+            gmt_create,
+            gmt_modified,
+            title
+        ) VALUES (
+            now(),
+            now(),
+            #{title}
+        )
+    </insert>
+
+</mapper>

@@ -35,7 +35,7 @@
         ORDER BY `order` ASC
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="insert" parameterType="Image" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT IGNORE INTO images (
           gmt_create,
           gmt_modified,
@@ -47,8 +47,8 @@
           `order`,
           status
         ) VALUES (
-          #{gmtCreate},
-          #{gmtModified},
+          now(),
+          now(),
           #{albumId},
           #{originTitle},
           #{title},
