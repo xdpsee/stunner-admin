@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cherry.stunner.data.service.impl.mapper.CategoryMapper">
+
+    <resultMap id="categoryResultMap" type="Category">
+        <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
+        <result property="albums" javaType="Integer" column="albums" jdbcType="INTEGER"/>
+        <result property="status" javaType="CategoryStatus" column="status" jdbcType="INTEGER"
+                typeHandler="com.cherry.stunner.data.service.impl.type.CategoryStatusTypeHandler"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="categoryResultMap">
+        SELECT * FROM categories WHERE id = #{catId}
+    </select>
+
+    <select id="selectByTitle" resultMap="categoryResultMap">
+        SELECT * FROM categories WHERE title = #{title}
+    </select>
+
+    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT IGNORE INTO categories (
+        gmt_create,
+        gmt_modified,
+        title
+        ) VALUES (
+        now(),
+        now(),
+        #{title}
+        )
+    </insert>
+
+
+
+</mapper>
