@@ -34,4 +34,14 @@
         )
     </insert>
 
+    <insert id="insertImageTag">
+        INSERT IGNORE INTO image_tags (
+            image_id,
+            tag_id
+        ) values(
+            #{imageId},
+            #{tagId}
+        )
+    </insert>
+
 </mapper>

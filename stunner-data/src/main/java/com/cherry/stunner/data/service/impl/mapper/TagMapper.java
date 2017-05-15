@@ -8,11 +8,17 @@ import java.util.List;
 
 public interface TagMapper {
 
-    List<Tag> selectByImageId(@Param("imageId") long imageId);
+
+
 
     Tag selectById(@Param("tagId") long tagId);
 
     int insert(Tag tag);
 
+    List<Tag> selectByImageId(@Param("imageId") long imageId);
+
+    int insertImageTag(@Param("imageId") long imageId, @Param("tagId") long tagId);
+
+    
 
 }
