@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cherry.stunner.data.service.impl.mapper.AlbumMapper">
+
+    <resultMap id="albumResultMap" type="Album">
+        <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="originTitle" javaType="String" column="origin_title" jdbcType="VARCHAR"/>
+        <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
+        <result property="originCoverUrl" javaType="String" column="origin_cover_url" jdbcType="VARCHAR"/>
+        <result property="coverUrl" javaType="String" column="cover_url" jdbcType="VARCHAR"/>
+        <result property="coverWidth" javaType="Integer" column="cover_width" jdbcType="INTEGER"/>
+        <result property="coverHeight" javaType="Integer" column="cover_height" jdbcType="INTEGER"/>
+        <result property="images" javaType="Integer" column="images" jdbcType="INTEGER"/>
+        <result property="status" javaType="AlbumStatus" column="status" jdbcType="INTEGER"
+                typeHandler="com.cherry.stunner.data.service.impl.type.AlbumStatusTypeHandler"/>
+    </resultMap>
+
+    <select id="selectAlbumById" resultMap="albumResultMap">
+        SELECT * FROM albums WHERE id = #{albumId}
+    </select>
+
+    <insert id="insertAlbum" parameterType="Album" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT IGNORE INTO albums (
+            gmt_create,
+            gmt_modified,
+            origin_title,
+            origin_cover_url
+        ) VALUES (
+            now(),
+            now(),
+            #{originTitle},
+            #{originCoverUrl}
+        )
+    </insert>
+
+
+</mapper>

@@ -10,15 +10,15 @@ public class Album extends Entity {
 
     private String title;
 
-    private String originImageUrl;
+    private String originCoverUrl;
 
-    private String imageUrl;
+    private String coverUrl;
 
-    private Integer imageWidth = 0;
+    private Integer coverWidth = 0;
 
-    private Integer imageHeight = 0;
+    private Integer coverHeight = 0;
 
-    private Integer imageCount = 0;
+    private Integer images = 0;
 
     private AlbumStatus status = AlbumStatus.NONE;
 

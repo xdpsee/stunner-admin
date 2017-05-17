@@ -14,15 +14,15 @@
                 typeHandler="com.cherry.stunner.data.service.impl.type.CategoryStatusTypeHandler"/>
     </resultMap>
 
-    <select id="selectById" resultMap="categoryResultMap">
-        SELECT * FROM categories WHERE id = #{catId}
+    <select id="selectCategoryById" resultMap="categoryResultMap">
+        SELECT * FROM categories WHERE id = #{cateId}
     </select>
 
-    <select id="selectByTitle" resultMap="categoryResultMap">
+    <select id="selectCategoryByTitle" resultMap="categoryResultMap">
         SELECT * FROM categories WHERE title = #{title}
     </select>
 
-    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="insertCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT IGNORE INTO categories (
         gmt_create,
         gmt_modified,
@@ -34,6 +34,37 @@
         )
     </insert>
 
+    <insert id="insertCategoryAlbum">
+        INSERT IGNORE INTO category_albums(
+            category_id,
+            album_id,
+            gmt_create
+        ) values(
+            #{cateId},
+            #{albumId},
+            #{date}
+        )
+    </insert>
 
+    <select id="selectCategoryAlbums" resultType="long">
+        select album_id from category_albums where category_id = #{cateId}
+        <if test="fromDate!=null">
+            and gmt_create
+            <choose>
+                <when test="asc!=true">
+                    &lt;
+                </when>
+                <otherwise>
+                    &gt;
+                </otherwise>
+            </choose>
+            #{fromDate}
+        </if>
+        order by gmt_create
+        <if test="asc!=true">
+             desc
+        </if>
+        limit #{limit}
+    </select>
 
 </mapper>

@@ -8,7 +8,6 @@
         <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
         <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
         <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
-
         <result property="albumId" javaType="Long" column="album_id" jdbcType="BIGINT"/>
         <result property="originTitle" javaType="String" column="origin_title" jdbcType="VARCHAR"/>
         <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
