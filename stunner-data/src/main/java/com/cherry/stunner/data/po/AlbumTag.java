@@ -5,11 +5,11 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CategoryAlbum {
-
-    private Long categoryId;
+public class AlbumTag {
 
     private Long albumId;
+
+    private Long tagId;
 
     private Date gmtCreate;
 

@@ -3,9 +3,9 @@ package com.cherry.stunner.data.po;
 import lombok.Data;
 
 @Data
-public class ImageTag {
+public class CategoryTag {
 
-    private Long imageId;
+    private Long categoryId;
 
     private Long tagId;
 

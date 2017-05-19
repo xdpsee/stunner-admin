@@ -9,7 +9,7 @@
         <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
         <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
         <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
-        <result property="albums" javaType="Integer" column="albums" jdbcType="INTEGER"/>
+        <result property="tags" javaType="Integer" column="tags" jdbcType="INTEGER"/>
         <result property="status" javaType="CategoryStatus" column="status" jdbcType="INTEGER"
                 typeHandler="com.cherry.stunner.data.service.impl.type.CategoryStatusTypeHandler"/>
     </resultMap>
@@ -33,38 +33,5 @@
         #{title}
         )
     </insert>
-
-    <insert id="insertCategoryAlbum">
-        INSERT IGNORE INTO category_albums(
-            category_id,
-            album_id,
-            gmt_create
-        ) values(
-            #{cateId},
-            #{albumId},
-            #{date}
-        )
-    </insert>
-
-    <select id="selectCategoryAlbums" resultType="long">
-        select album_id from category_albums where category_id = #{cateId}
-        <if test="fromDate!=null">
-            and gmt_create
-            <choose>
-                <when test="asc!=true">
-                    &lt;
-                </when>
-                <otherwise>
-                    &gt;
-                </otherwise>
-            </choose>
-            #{fromDate}
-        </if>
-        order by gmt_create
-        <if test="asc!=true">
-             desc
-        </if>
-        limit #{limit}
-    </select>
 
 </mapper>

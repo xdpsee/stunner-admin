@@ -8,6 +8,8 @@
         <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
         <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
         <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="type" javaType="TagType" column="type" jdbcType="INTEGER"
+                typeHandler="com.cherry.stunner.data.service.impl.type.TagTypeHandler"/>
         <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -15,33 +17,56 @@
         SELECT * FROM tags WHERE id = #{tagId}
     </select>
 
-    <select id="selectByImageId" resultMap="tagResultMap">
-        SELECT * FROM tags
-        WHERE id in (
-            SELECT tag_id FROM image_tags WHERE image_id = #{imageId}
-        )
-    </select>
-
     <insert id="insert" parameterType="Tag" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT IGNORE INTO tags (
             gmt_create,
             gmt_modified,
+            type,
             title
         ) VALUES (
             now(),
             now(),
+            #{type},
             #{title}
         )
     </insert>
 
-    <insert id="insertImageTag">
-        INSERT IGNORE INTO image_tags (
-            image_id,
+    <insert id="insertCategoryTag">
+        INSERT IGNORE INTO category_tags(
+            category_id,
+            tag_id,
+            gmt_create
+        ) values(
+            #{cateId},
+            #{tagId},
+            #{date}
+        )
+    </insert>
+    <select id="selectCategoryTags" resultMap="tagResultMap">
+        SELECT * FROM tags
+        WHERE id in (
+            select tag_id from category_tags where category_id = #{cateId}
+        )
+    </select>
+
+
+    <insert id="insertAlbumTag">
+        INSERT IGNORE INTO album_tags (
+            album_id,
             tag_id
         ) values(
-            #{imageId},
+            #{albumId},
             #{tagId}
         )
     </insert>
+
+    <select id="selectAlbumTags" resultMap="tagResultMap">
+        SELECT * FROM tags
+        WHERE id in (
+            SELECT tag_id FROM album_tags WHERE album_id = #{albumId}
+        )
+    </select>
+
+
 
 </mapper>

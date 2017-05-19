@@ -11,7 +11,7 @@ public class Category extends Entity {
 
     private String title;
 
-    private Integer albums;
+    private Integer tags = 0;
 
     private CategoryStatus status;
 

@@ -8,9 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -47,43 +44,8 @@ public class CategoryTests {
     }
 
     @Test
-    public void testCategoryAlbums() {
+    public void testCategoryTags() {
 
-
-        categoryMapper.insertCategoryAlbum(0L, 1L, new Date());
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        categoryMapper.insertCategoryAlbum(0L, 3, new Date());
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        categoryMapper.insertCategoryAlbum(0L, 4L, new Date());
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        categoryMapper.insertCategoryAlbum(0L, 2L, new Date());
-
-        List<Long> albumIds = categoryMapper.selectCategoryAlbums(0L, null, true, 5);
-
-        assertEquals(1L, albumIds.get(0).longValue());
-        assertEquals(3L, albumIds.get(1).longValue());
-        assertEquals(4L, albumIds.get(2).longValue());
-        assertEquals(2L, albumIds.get(3).longValue());
-
-        albumIds = categoryMapper.selectCategoryAlbums(0L, null, false, 5);
-
-        assertEquals(2L, albumIds.get(0).longValue());
-        assertEquals(4L, albumIds.get(1).longValue());
-        assertEquals(3L, albumIds.get(2).longValue());
-        assertEquals(1L, albumIds.get(3).longValue());
 
     }
 

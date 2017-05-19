@@ -22,19 +22,21 @@
         <typeAlias alias="ImageStatus" type="com.cherry.stunner.data.enums.ImageStatus"/>
         <typeAlias alias="AlbumStatus" type="com.cherry.stunner.data.enums.AlbumStatus"/>
         <typeAlias alias="CategoryStatus" type="com.cherry.stunner.data.enums.CategoryStatus"/>
+        <typeAlias alias="TagType" type="com.cherry.stunner.data.enums.TagType"/>
 
         <typeAlias alias="Category" type="com.cherry.stunner.data.po.Category"/>
+        <typeAlias alias="CategoryTag" type="com.cherry.stunner.data.po.CategoryTag"/>
+        <typeAlias alias="Tag" type="com.cherry.stunner.data.po.Tag"/>
+        <typeAlias alias="TagAlbum" type="com.cherry.stunner.data.po.AlbumTag"/>
         <typeAlias alias="Album" type="com.cherry.stunner.data.po.Album"/>
         <typeAlias alias="Image" type="com.cherry.stunner.data.po.Image"/>
-        <typeAlias alias="Tag" type="com.cherry.stunner.data.po.Tag"/>
-        <typeAlias alias="ImageTag" type="com.cherry.stunner.data.po.ImageTag"/>
-        <typeAlias alias="CategoryAlbum" type="com.cherry.stunner.data.po.CategoryAlbum"/>
     </typeAliases>
 
     <typeHandlers>
         <typeHandler handler="com.cherry.stunner.data.service.impl.type.ImageStatusTypeHandler"/>
         <typeHandler handler="com.cherry.stunner.data.service.impl.type.AlbumStatusTypeHandler"/>
         <typeHandler handler="com.cherry.stunner.data.service.impl.type.CategoryStatusTypeHandler"/>
+        <typeHandler handler="com.cherry.stunner.data.service.impl.type.TagTypeHandler"/>
 
     </typeHandlers>
 
