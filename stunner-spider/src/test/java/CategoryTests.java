@@ -43,10 +43,4 @@ public class CategoryTests {
 
     }
 
-    @Test
-    public void testCategoryTags() {
-
-
-    }
-
 }

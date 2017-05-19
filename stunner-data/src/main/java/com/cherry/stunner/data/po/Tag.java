@@ -10,8 +10,8 @@ public class Tag extends Entity {
 
     private String title;
 
-    private Integer albums;
-    
+    private Integer albums = 0;
+
 }
 
 
