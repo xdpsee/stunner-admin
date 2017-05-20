@@ -118,6 +118,8 @@ public class M86CategoryTagsProcessor implements PageProcessor {
         int retryTimes = 6;
         do {
             try {
+                System.out.println(url);
+
                 String response = httpUtils.get(url);
                 if (!StringUtils.isEmpty(response)) {
                     Html moreHtml = new Html(response);
