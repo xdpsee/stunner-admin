@@ -28,6 +28,10 @@
         SELECT * FROM albums WHERE origin_url = #{originUrl}
     </select>
 
+    <select id="selectAlbumIdByOriginUrl" resultType="long">
+        SELECT id FROM albums WHERE origin_url = #{originUrl}
+    </select>
+
     <insert id="insertAlbum" parameterType="Album" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO albums (
             gmt_create,

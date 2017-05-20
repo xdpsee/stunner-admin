@@ -7,6 +7,8 @@ import java.io.IOException;
 
 public class HttpUtils {
 
+    public static final String MORE_ALBUMS_REQUEST_FORMAT = "http://www.17786.com/Process/handler.ashx?action=tagslist&keyword=%s&page=%d&rnd=%f";
+
     private final OkHttpClient client = new OkHttpClient();
 
     public String get(String url) throws IOException {

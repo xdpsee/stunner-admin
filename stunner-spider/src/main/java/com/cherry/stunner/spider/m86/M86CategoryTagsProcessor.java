@@ -37,10 +37,10 @@ public class M86CategoryTagsProcessor implements PageProcessor {
     private TagService tagService;
     @Autowired
     private AlbumService albumService;
+    @Autowired
+    private M86ImageProcessor imageProcessor;
 
     private final HttpUtils httpUtils = new HttpUtils();
-
-    private static final String MORE_ALBUMS_REQUEST_FORMAT = "http://www.17786.com/Process/handler.ashx?action=tagslist&keyword=%s&page=%d&rnd=%f";
 
     @Override
     public Site getSite() {
@@ -81,6 +81,11 @@ public class M86CategoryTagsProcessor implements PageProcessor {
         if (albumContainer.match()) {
             processAlbumPage(page, albumContainer);
         }
+
+        Selectable imageContent = page.getHtml().xpath("//html/body/div[@class='falls-detail']/div[@class='content']");
+        if (imageContent.match()) {
+            imageProcessor.process(page, imageContent);
+        }
     }
 
     private void processAlbumPage(Page page, Selectable albumContainer) {
@@ -103,17 +108,17 @@ public class M86CategoryTagsProcessor implements PageProcessor {
 
         List<Selectable> albumList = albumContainer.xpath("ul[@class='col']/li[@class='falls']").nodes();
 
-        saveAlbum(albumList, tagId);
+        saveAlbum(page, albumList, tagId);
 
         Selectable moreLink = albumContainer.xpath("div[@class='veiwall']/a[@id='veiwall']");
         if (moreLink.match()) {
-            processMoreAlbums(tagId, tagKeyWord, 2);
+            processMoreAlbums(page, tagId, tagKeyWord, 2);
         }
     }
 
-    private void processMoreAlbums(long tagId, String tagKeyWord, int pageNo) {
+    private void processMoreAlbums(final Page page, long tagId, String tagKeyWord, int pageNo) {
 
-        final String url = String.format(MORE_ALBUMS_REQUEST_FORMAT, tagKeyWord, pageNo, RandomUtils.nextDouble());
+        final String url = String.format(HttpUtils.MORE_ALBUMS_REQUEST_FORMAT, tagKeyWord, pageNo, RandomUtils.nextDouble());
 
         int retryTimes = 6;
         do {
@@ -125,10 +130,10 @@ public class M86CategoryTagsProcessor implements PageProcessor {
                     Html moreHtml = new Html(response);
                     List<Selectable> albumList = moreHtml.xpath("//html/body/li[@class='falls']").nodes();
 
-                    saveAlbum(albumList, tagId);
+                    saveAlbum(page, albumList, tagId);
 
                     if (!albumList.isEmpty()) {
-                        processMoreAlbums(tagId, tagKeyWord, ++pageNo);
+                        processMoreAlbums(page, tagId, tagKeyWord, ++pageNo);
                     }
                 }
                 //
@@ -147,9 +152,9 @@ public class M86CategoryTagsProcessor implements PageProcessor {
 
     }
 
-    private void saveAlbum(List<Selectable> albumList, long tagId) {
+    private void saveAlbum(final Page page, List<Selectable> albumList, long tagId) {
 
-        albumList.forEach(albumLi -> {
+        albumList.parallelStream().forEach(albumLi -> {
             String albumUrl = albumLi.xpath("a[@class='img']/@href").toString();
             String coverUrl = albumLi.xpath("a[@class='img']/img/@src").toString();
             String albumTitle = albumLi.xpath("a[@class='img']/img/@alt").toString();
@@ -161,6 +166,8 @@ public class M86CategoryTagsProcessor implements PageProcessor {
                 if (tagId > 0) {
                     tagService.bindAlbumTag(albumId, tagId);
                 }
+
+                page.addTargetRequest(albumUrl);
             }
         });
 

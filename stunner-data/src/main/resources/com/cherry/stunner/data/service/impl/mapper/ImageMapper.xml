@@ -34,8 +34,13 @@
         ORDER BY `order` ASC
     </select>
 
+    <select id="selectIdByAlbumIdAndOriginUrl" resultType="long">
+        SELECT id FROM images
+        WHERE album_id = #{albumId} AND origin_url = #{originUrl}
+    </select>
+
     <insert id="insert" parameterType="Image" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT IGNORE INTO images (
+        INSERT INTO images (
           gmt_create,
           gmt_modified,
           album_id,

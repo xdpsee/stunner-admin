@@ -37,6 +37,11 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public Long existAlbumByUrl(String url) {
+        return albumMapper.selectAlbumIdByOriginUrl(url);
+    }
+
+    @Override
     public int updateAlbum(long albumId, String title, String coverUrl, int coverWidth, int coverHeight) {
         return 0;
     }

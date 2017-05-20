@@ -12,6 +12,8 @@ public interface ImageMapper {
 
     List<Image> selectUnreadyByAlbumId(@Param("albumId") Long albumId);
 
+    Long selectIdByAlbumIdAndOriginUrl(@Param("albumId") Long albumId, @Param("originUrl") String originUrl);
+
     int insert(Image image);
 
     int updateImage(@Param("imageId") long imageId
