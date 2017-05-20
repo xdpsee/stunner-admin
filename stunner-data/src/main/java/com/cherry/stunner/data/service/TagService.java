@@ -9,7 +9,11 @@ public interface TagService {
 
     long createTag(TagType type, String title);
 
+    void bindCategoryTag(long categoryId, long tagId);
+
     List<Tag> getCategoryTags(long category);
+
+    void bindAlbumTag(long albumId, long tagId);
 
     List<Tag> getAlbumTags(long album);
 

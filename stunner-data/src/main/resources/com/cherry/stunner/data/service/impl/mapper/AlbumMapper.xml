@@ -8,9 +8,10 @@
         <result property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
         <result property="gmtCreate" javaType="java.util.Date" column="gmt_create" jdbcType="TIMESTAMP"/>
         <result property="gmtModified" javaType="java.util.Date" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="originUrl" javaType="String" column="origin_url" jdbcType="VARCHAR"/>
         <result property="originTitle" javaType="String" column="origin_title" jdbcType="VARCHAR"/>
-        <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
         <result property="originCoverUrl" javaType="String" column="origin_cover_url" jdbcType="VARCHAR"/>
+        <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
         <result property="coverUrl" javaType="String" column="cover_url" jdbcType="VARCHAR"/>
         <result property="coverWidth" javaType="Integer" column="cover_width" jdbcType="INTEGER"/>
         <result property="coverHeight" javaType="Integer" column="cover_height" jdbcType="INTEGER"/>
@@ -23,19 +24,24 @@
         SELECT * FROM albums WHERE id = #{albumId}
     </select>
 
+    <select id="selectByOriginUrl" resultMap="albumResultMap">
+        SELECT * FROM albums WHERE origin_url = #{originUrl}
+    </select>
+
     <insert id="insertAlbum" parameterType="Album" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT IGNORE INTO albums (
+        INSERT INTO albums (
             gmt_create,
             gmt_modified,
+            origin_url,
             origin_title,
             origin_cover_url
         ) VALUES (
             now(),
             now(),
+            #{originUrl},
             #{originTitle},
             #{originCoverUrl}
         )
     </insert>
-
 
 </mapper>

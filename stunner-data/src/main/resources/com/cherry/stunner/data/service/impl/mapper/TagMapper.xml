@@ -13,12 +13,16 @@
         <result property="title" javaType="String" column="title" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="select" resultMap="tagResultMap">
+        SELECT * FROM tags WHERE type = #{type} AND title = #{title}
+    </select>
+
     <select id="selectById" resultMap="tagResultMap">
         SELECT * FROM tags WHERE id = #{tagId}
     </select>
 
     <insert id="insert" parameterType="Tag" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT IGNORE INTO tags (
+        INSERT INTO tags (
             gmt_create,
             gmt_modified,
             type,

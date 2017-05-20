@@ -24,6 +24,7 @@ public class AlbumTests {
     public void testInsertAlbum() {
 
         Album album = new Album();
+        album.setOriginUrl("url.origin");
         album.setOriginTitle("title.origin");
         album.setOriginCoverUrl("cover.url.origin");
 

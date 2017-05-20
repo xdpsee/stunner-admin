@@ -11,6 +11,8 @@ public interface TagMapper {
 
     Tag selectById(@Param("tagId") long tagId);
 
+    Tag select(@Param("type") int type, @Param("title") String title);
+
     int insert(Tag tag);
 
     int insertCategoryTag(@Param("cateId") long categoryId

@@ -7,6 +7,8 @@ public interface AlbumMapper {
 
     Album selectAlbumById(@Param("albumId") long albumId);
 
+    Album selectByOriginUrl(@Param("originUrl") String url);
+
     int insertAlbum(Album album);
 
 }

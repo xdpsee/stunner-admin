@@ -23,7 +23,7 @@
     </select>
 
     <insert id="insertCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT IGNORE INTO categories (
+        INSERT INTO categories (
         gmt_create,
         gmt_modified,
         title

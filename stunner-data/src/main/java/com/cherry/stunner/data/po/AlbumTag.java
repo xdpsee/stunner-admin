@@ -11,6 +11,8 @@ public class AlbumTag {
 
     private Long tagId;
 
+    private Integer available = 0;
+
     private Date gmtCreate;
 
 }

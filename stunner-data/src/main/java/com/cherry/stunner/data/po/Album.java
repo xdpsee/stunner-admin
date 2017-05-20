@@ -6,11 +6,13 @@ import lombok.Data;
 @Data
 public class Album extends Entity {
 
+    private String originUrl;
+
     private String originTitle;
 
-    private String title;
-
     private String originCoverUrl;
+
+    private String title;
 
     private String coverUrl;
 
