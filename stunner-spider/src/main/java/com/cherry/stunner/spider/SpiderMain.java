@@ -11,7 +11,7 @@ public class SpiderMain {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 
         Spider.create(context.getBean(M86CategoryTagsProcessor.class))
-                .addUrl("http://www.17786.com/zhifu.html")
+                .addUrl("http://www.17786.com/meinv/")
                 .thread(1)
                 .run();
 
