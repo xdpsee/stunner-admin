@@ -120,7 +120,7 @@ public class M86CategoryTagsProcessor implements PageProcessor {
 
         final String url = String.format(HttpUtils.MORE_ALBUMS_REQUEST_FORMAT, tagKeyWord, pageNo, RandomUtils.nextDouble());
 
-        int retryTimes = 6;
+        int retryTimes = 10;
         do {
             try {
                 System.out.println(url);
@@ -149,7 +149,6 @@ public class M86CategoryTagsProcessor implements PageProcessor {
                 }
             }
         } while (retryTimes > 0);
-
     }
 
     private void saveAlbum(final Page page, List<Selectable> albumList, long tagId) {
