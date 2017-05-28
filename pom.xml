@@ -27,7 +27,19 @@
     <modules>
         <module>stunner-data</module>
         <module>stunner-spider</module>
-        <module>stunner-admin</module>
+        <module>stunner-api</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>4.3.8.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
