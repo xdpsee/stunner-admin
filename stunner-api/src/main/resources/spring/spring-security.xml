@@ -86,7 +86,9 @@
 
     <!-- Used for the persistenceof tokens (currently an in memory implementation) -->
     <bean id="tokenStore"
-          class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>
+          class="org.springframework.security.oauth2.provider.token.store.JdbcTokenStore">
+        <constructor-arg ref="dataSource"/>
+    </bean>
 
     <!-- Used to create token and and every thing about them except for their
         persistence that is reposibility of TokenStore (Given here is a default implementation) -->
@@ -144,7 +146,7 @@
                       scope="read,write" secret="secret"/>
         <!--Self defined client -->
         <oauth:client client-id="mobile_1"
-                      authorized-grant-types="password,authorization_code,client_credentials"
+                      authorized-grant-types="password,authorization_code,refresh_token,client_credentials"
                       authorities="ROLE_USER" scope="read,write,trust" secret="secret_1"/>
     </oauth:client-details-service>
 
