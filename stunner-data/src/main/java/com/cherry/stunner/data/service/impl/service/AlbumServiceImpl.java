@@ -8,6 +8,14 @@ import com.cherry.stunner.data.service.impl.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toMap;
+
 @Component
 public class AlbumServiceImpl implements AlbumService {
 
@@ -51,4 +59,27 @@ public class AlbumServiceImpl implements AlbumService {
         return 0;
     }
 
+    @Override
+    public List<Album> getAlbums(long tagId, Long timeOffset, boolean ascending, int limit) {
+
+        final List<Album> albums = new ArrayList<>();
+
+        final List<Long> albumIds = albumMapper.selectAlbumIds(tagId
+                , timeOffset != null ? new Date(timeOffset) : null
+                , ascending
+                , limit);
+
+        if (!albumIds.isEmpty()) {
+            final Map<Long, Album> albumMap = albumMapper.selectAlbums(albumIds).stream()
+                    .collect(toMap(Album::getId, Function.identity()));
+            albumIds.forEach(albumId -> {
+                Album album = albumMap.get(albumId);
+                if (album != null) {
+                    albums.add(album);
+                }
+            });
+        }
+
+        return albums;
+    }
 }

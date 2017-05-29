@@ -1,6 +1,9 @@
 package com.cherry.stunner.data.service;
 
 import com.cherry.stunner.data.enums.AlbumStatus;
+import com.cherry.stunner.data.po.Album;
+
+import java.util.List;
 
 public interface AlbumService {
 
@@ -12,6 +15,7 @@ public interface AlbumService {
 
     int updateAlbumStatus(long albumId, AlbumStatus status);
 
+    List<Album> getAlbums(long tagId, Long timeOffset, boolean ascending, int limit);
 
 }
 

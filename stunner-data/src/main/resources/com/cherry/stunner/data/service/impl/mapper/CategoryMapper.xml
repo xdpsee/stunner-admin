@@ -14,6 +14,13 @@
                 typeHandler="com.cherry.stunner.data.service.impl.type.CategoryStatusTypeHandler"/>
     </resultMap>
 
+    <select id="selectAll" resultMap="categoryResultMap">
+        SELECT * FROM categories
+        <if test="status!=null">
+            WHERE status = #{status}
+        </if>
+    </select>
+
     <select id="selectCategoryById" resultMap="categoryResultMap">
         SELECT * FROM categories WHERE id = #{cateId}
     </select>

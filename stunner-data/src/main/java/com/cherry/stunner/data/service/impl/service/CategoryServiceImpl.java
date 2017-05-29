@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Component
 public class CategoryServiceImpl implements CategoryService {
 
@@ -37,5 +39,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean updateCategoryStatus(long categoryId, CategoryStatus status) {
         return false;
+    }
+
+    @Override
+    public List<Category> listCategories(CategoryStatus status) {
+
+        return categoryMapper.selectAll(status != null ? status.code : null);
+
     }
 }

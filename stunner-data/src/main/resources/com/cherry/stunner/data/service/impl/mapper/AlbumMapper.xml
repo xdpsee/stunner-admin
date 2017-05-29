@@ -32,6 +32,28 @@
         SELECT id FROM albums WHERE origin_url = #{originUrl}
     </select>
 
+    <select id="selectAlbumIds" resultType="string">
+        <![CDATA[
+        SELECT album_id FROM album_tags
+        WHERE tag_id = #{tagId}
+        <if test="timeOffset!=null">
+          <choose>
+              <when test="ascending!=true">
+                gmt_create < #{timeOffset}
+              </when>
+              <otherwise>
+                gmt_create > #{timeOffset}
+              </otherwise>
+          </choose>
+        </if>
+        ORDER BY gmt_create
+        <if test="ascending!=true">
+            DESC
+        </if>
+        limit #{limit}
+        ]]>
+    </select>
+
     <insert id="insertAlbum" parameterType="Album" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO albums (
             gmt_create,
