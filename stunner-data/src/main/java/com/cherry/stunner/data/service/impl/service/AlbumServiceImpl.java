@@ -68,7 +68,7 @@ public class AlbumServiceImpl implements AlbumService {
                 , timeOffset != null ? new Date(timeOffset) : null
                 , limit)
                 :
-                albumMapper.selectAlbumIdsAsc(tagId
+                albumMapper.selectAlbumIdsDesc(tagId
                         , timeOffset != null ? new Date(timeOffset) : null
                         , limit);
 

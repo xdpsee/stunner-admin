@@ -20,6 +20,7 @@ public interface AlbumMapper {
     List<Long> selectAlbumIdsAsc(@Param("tagId") long tagId
             , @Param("timeOffset") Date timeOffset
             , @Param("limit") int limit);
+
     List<Long> selectAlbumIdsDesc(@Param("tagId") long tagId
             , @Param("timeOffset") Date timeOffset
             , @Param("limit") int limit);

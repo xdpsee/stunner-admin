@@ -2,6 +2,8 @@ package com.cherry.stunner.spider.m86;
 
 import com.cherry.stunner.data.service.AlbumService;
 import com.cherry.stunner.data.service.ImageService;
+import com.cherry.stunner.data.service.impl.mapper.AlbumMapper;
+import com.cherry.stunner.data.service.impl.mapper.TagMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.selector.Selectable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -57,7 +62,7 @@ public class M86ImageProcessor {
 
         String albumTitle = title.replaceAll(PATTERN_ALL.pattern(), "");
         String albumUrl = pageUrl.replaceAll(PATTERN_CURR.pattern(), "_1.html");
-        final Long albumId =  albumService.existAlbumByUrl(albumUrl);
+        final Long albumId = albumService.existAlbumByUrl(albumUrl);
         if (albumId == null) {
             logger.error(String.format("imageBox error, %s, %s, %s", pageUrl, albumTitle, albumUrl));
             return;
@@ -88,9 +93,36 @@ public class M86ImageProcessor {
         String imageUrl = img.xpath("img/@src").toString();
         long imageId = imageService.createImage(albumId, title, imageUrl);
         System.out.println(String.format("%d, %s", imageId, pageUrl));
+
+        // 修正专辑发布日期
+        Selectable dateSpan = page.getHtml().xpath("//html/body/div[@class='falls-detail']/div[@class='content']/div[@class='tsmaincont-desc']/span[1]");
+        if (dateSpan.match()) {
+            String dateStr = dateSpan.xpath("span/text()").toString();
+            matcher = PATTERN_DATE.matcher(dateStr);
+            if (matcher.find()) {
+                String str = matcher.group();
+                try {
+                    final Date date = dateFormat.get().parse(str);
+                    tagMapper.updateAlbumTagTime(albumId, date);
+                    albumMapper.updateAlbumCreateTime(albumId, date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private final Pattern PATTERN_ALL = Pattern.compile("(\\(\\d+\\/\\d+\\))");
 
     private final Pattern PATTERN_CURR = Pattern.compile("(_\\d+\\.html$)");
+
+    @Autowired
+    private TagMapper tagMapper;
+    @Autowired
+    private AlbumMapper albumMapper;
+
+    private Pattern PATTERN_DATE = Pattern.compile("(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})");
+
+    private ThreadLocal<SimpleDateFormat> dateFormat = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
 }
