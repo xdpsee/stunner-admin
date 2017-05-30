@@ -80,8 +80,26 @@
         WHERE id = #{albumId}
     </update>
 
+    <update id="updateAlbumCover">
+        UPDATE albums SET gmt_modified = now()
+        <if test="coverUrl != null">
+          , cover_url = #{coverUrl}
+        </if>
+        <if test="coverWidth != null">
+            , cover_width = #{coverWidth}
+        </if>
+        <if test="coverHeight != null">
+            , cover_height = #{coverHeight}
+        </if>
+        WHERE id = #{albumId}
+    </update>
+
     <select id="selectAlbumUrls" resultType="string">
         SELECT origin_url FROM albums limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectNoCoverUrlAlbums" resultMap="albumResultMap">
+        SELECT * FROM albums WHERE cover_width = 0 OR cover_height = 0 limit #{offset}, #{limit}
     </select>
 
 </mapper>

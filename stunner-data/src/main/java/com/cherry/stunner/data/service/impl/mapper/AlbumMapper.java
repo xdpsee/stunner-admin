@@ -29,6 +29,13 @@ public interface AlbumMapper {
 
     int updateAlbumCreateTime(@Param("albumId") long albumId, @Param("gmtCreate") Date createDate);
 
+    int updateAlbumCover(@Param("albumId") long albumId
+            , @Param("coverUrl") String fileName
+            , @Param("coverWidth") Integer width
+            , @Param("coverHeight") Integer height);
+
     List<String> selectAlbumUrls(@Param("offset") int offset, @Param("limit") int limit);
+
+    List<Album> selectNoCoverUrlAlbums(@Param("offset") int offset, @Param("limit") int limit);
 
 }
