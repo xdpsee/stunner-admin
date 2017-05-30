@@ -17,10 +17,17 @@ public interface AlbumMapper {
 
     int insertAlbum(Album album);
 
-    List<Long> selectAlbumIds(@Param("tagId") long tagId
+    List<Long> selectAlbumIdsAsc(@Param("tagId") long tagId
             , @Param("timeOffset") Date timeOffset
-            , @Param("ascending") boolean ascending
+            , @Param("limit") int limit);
+    List<Long> selectAlbumIdsDesc(@Param("tagId") long tagId
+            , @Param("timeOffset") Date timeOffset
             , @Param("limit") int limit);
 
     List<Album> selectAlbums(@Param("albumIds") Collection<Long> albumIds);
+
+    int updateAlbumCreateTime(@Param("albumId") long albumId, @Param("gmtCreate") Date createDate);
+
+    List<String> selectAlbumUrls(@Param("offset") int offset, @Param("limit") int limit);
+
 }

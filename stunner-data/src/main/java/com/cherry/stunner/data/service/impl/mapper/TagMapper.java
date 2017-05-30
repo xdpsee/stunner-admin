@@ -26,4 +26,6 @@ public interface TagMapper {
 
     List<Tag> selectAlbumTags(@Param("albumId") long albumId);
 
+    int updateAlbumTagTime(@Param("albumId") long albumId, @Param("time") Date time);
+
 }

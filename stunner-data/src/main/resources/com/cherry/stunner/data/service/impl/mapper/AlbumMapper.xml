@@ -32,26 +32,31 @@
         SELECT id FROM albums WHERE origin_url = #{originUrl}
     </select>
 
-    <select id="selectAlbumIds" resultType="string">
-        <![CDATA[
+    <select id="selectAlbumIdsAsc" resultType="long">
         SELECT album_id FROM album_tags
         WHERE tag_id = #{tagId}
-        <if test="timeOffset!=null">
-          <choose>
-              <when test="ascending!=true">
-                gmt_create < #{timeOffset}
-              </when>
-              <otherwise>
-                gmt_create > #{timeOffset}
-              </otherwise>
-          </choose>
+        <if test="timeOffset != null">
+          AND gmt_time &lt; #{timeOffset}
         </if>
-        ORDER BY gmt_create
-        <if test="ascending!=true">
-            DESC
-        </if>
+        ORDER BY gmt_time
         limit #{limit}
-        ]]>
+    </select>
+
+    <select id="selectAlbumIdsDesc" resultType="long">
+        SELECT album_id FROM album_tags
+        WHERE tag_id = #{tagId}
+        <if test="timeOffset != null">
+          AND gmt_time &gt; #{timeOffset}
+        </if>
+        ORDER BY gmt_time DESC
+        limit #{limit}
+    </select>
+
+    <select id="selectAlbums" resultMap="albumResultMap">
+        SELECT * FROM  albums WHERE id IN
+        <foreach collection="albumIds" open="(" close=")" separator="," item="albumId">
+            #{albumId}
+        </foreach>
     </select>
 
     <insert id="insertAlbum" parameterType="Album" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -69,5 +74,14 @@
             #{originCoverUrl}
         )
     </insert>
+
+    <update id="updateAlbumCreateTime">
+        UPDATE albums SET gmt_create = #{gmtCreate}, gmt_modified = now()
+        WHERE id = #{albumId}
+    </update>
+
+    <select id="selectAlbumUrls" resultType="string">
+        SELECT origin_url FROM albums limit #{offset}, #{limit}
+    </select>
 
 </mapper>

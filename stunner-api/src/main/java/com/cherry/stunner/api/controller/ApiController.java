@@ -70,7 +70,7 @@ public class ApiController {
         List<com.cherry.stunner.api.vo.Album> list = albums.stream()
                 .map(e -> new com.cherry.stunner.api.vo.Album(e.getId()
                         , e.getGmtCreate().getTime()
-                        , e.getTitle()
+                        , e.getOriginTitle()
                         , e.getOriginCoverUrl()
                         , e.getCoverWidth()
                         , e.getCoverHeight()))

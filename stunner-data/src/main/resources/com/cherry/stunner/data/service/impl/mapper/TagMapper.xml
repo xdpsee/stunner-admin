@@ -71,6 +71,8 @@
         )
     </select>
 
-
+    <update id="updateAlbumTagTime">
+        UPDATE album_tags SET gmt_time = #{time} WHERE album_id = #{albumId}
+    </update>
 
 </mapper>

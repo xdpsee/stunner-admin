@@ -64,10 +64,13 @@ public class AlbumServiceImpl implements AlbumService {
 
         final List<Album> albums = new ArrayList<>();
 
-        final List<Long> albumIds = albumMapper.selectAlbumIds(tagId
+        final List<Long> albumIds = ascending ? albumMapper.selectAlbumIdsAsc(tagId
                 , timeOffset != null ? new Date(timeOffset) : null
-                , ascending
-                , limit);
+                , limit)
+                :
+                albumMapper.selectAlbumIdsAsc(tagId
+                        , timeOffset != null ? new Date(timeOffset) : null
+                        , limit);
 
         if (!albumIds.isEmpty()) {
             final Map<Long, Album> albumMap = albumMapper.selectAlbums(albumIds).stream()
