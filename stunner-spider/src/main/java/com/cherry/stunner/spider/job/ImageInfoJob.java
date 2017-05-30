@@ -27,9 +27,12 @@ public class ImageInfoJob {
 
         System.out.println(ImageInfoJob.class.getName() + ", execute");
 
-        processAlbums();
-
-        processImages();
+        try {
+            processAlbums();
+            processImages();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

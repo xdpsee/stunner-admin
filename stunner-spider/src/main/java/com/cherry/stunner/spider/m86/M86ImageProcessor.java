@@ -79,8 +79,6 @@ public class M86ImageProcessor {
         imageBoxUrls.remove(pageUrl);
         imageBoxUrls.forEach(url -> page.getTargetRequests().add(new Request(url)));
 
-        System.out.println(pageUrl);
-
         Selectable img = imageContent.xpath("div[@class='img_box']/a/img[@class='IMG_show']");
         if (!img.match()) {
             img = imageContent.xpath("div[@class='img_box']/img[@class='IMG_show']");

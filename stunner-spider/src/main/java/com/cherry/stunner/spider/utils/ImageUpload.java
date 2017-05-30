@@ -77,7 +77,7 @@ public class ImageUpload implements InitializingBean{
         final MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
 
         try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
-            final byte[] buffer = new byte[1024];
+            final byte[] buffer = new byte[8192];
             for (int read; (read = is.read(buffer)) != -1;) {
                 messageDigest.update(buffer, 0, read);
             }
