@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.cherry.stunner.spider.job"/>
+    <context:annotation-config/>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="spiderJobTrigger"/>
+                <ref bean="imageInfoJobTrigger"/>
+            </list>
+        </property>
+        <property name="autoStartup" value="true"/>
+    </bean>
+
+    <bean id="spiderJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="spiderJobDetail"/>
+        <property name="cronExpression" value="0 0 1 ? * L"/><!-- 每周星期天1点 -->
+    </bean>
+    <bean id="imageInfoJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="imageInfoJobDetail"/>
+        <property name="cronExpression" value="*/1 * * * * ?"/><!-- 每天 -->
+    </bean>
+
+    <bean id="spiderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="spiderJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="imageInfoJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="imageInfoJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="spiderJob" class="com.cherry.stunner.spider.job.SpiderJob"/>
+    <bean id="imageInfoJob" class="com.cherry.stunner.spider.job.ImageInfoJob"/>
+
+</beans>
+
