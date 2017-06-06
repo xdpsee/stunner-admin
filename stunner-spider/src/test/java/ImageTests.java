@@ -35,12 +35,12 @@ public class ImageTests {
 
         assertEquals(1, imageMapper.insert(image));
 
-        List<Image> images = imageMapper.selectByAlbumId(1L);
+        List<Image> images = imageMapper.selectByAlbumId(1L, null);
         assertTrue(images.isEmpty());
 
         imageMapper.updateStatus(image.getId(), ImageStatus.READY);
 
-        images = imageMapper.selectByAlbumId(1L);
+        images = imageMapper.selectByAlbumId(1L, null);
         assertTrue(!images.isEmpty());
 
 

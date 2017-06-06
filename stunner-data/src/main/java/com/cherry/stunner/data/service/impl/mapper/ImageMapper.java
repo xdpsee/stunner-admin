@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ImageMapper {
 
-    List<Image> selectByAlbumId(@Param("albumId") Long albumId);
+    List<Image> selectByAlbumId(@Param("albumId") Long albumId, @Param("limit") Integer limit);
 
     List<Image> selectUnreadyByAlbumId(@Param("albumId") Long albumId);
 

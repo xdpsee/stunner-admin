@@ -8,6 +8,8 @@ import com.cherry.stunner.data.service.impl.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ImageServiceImpl implements ImageService {
 
@@ -44,5 +46,12 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public int updateImageStatus(long imageId, ImageStatus status) {
         return 0;
+    }
+
+    @Override
+    public List<Image> getImages(long albumId, Integer limit) {
+
+        return imageMapper.selectByAlbumId(albumId, limit);
+
     }
 }

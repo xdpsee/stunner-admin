@@ -23,8 +23,10 @@
     <select id="selectByAlbumId" resultMap="imageResultMap">
         SELECT * FROM images
         WHERE album_id = #{albumId}
-        AND status = 2
         ORDER BY `order` ASC
+        <if test="limit != null">
+            limit #{limit}
+        </if>
     </select>
 
     <select id="selectUnreadyByAlbumId" resultMap="imageResultMap">
